@@ -1,0 +1,248 @@
+:root {
+  --color-primary: #1E7C3A;
+  --color-primary-hover: #155C2B;
+  --color-accent-green: #4CAF50;
+  --color-accent-light: #E8F5E9;
+
+  --color-blue-primary: #1565C0;
+  --color-blue-mid: #2196F3;
+  --color-blue-light: #E3F2FD;
+  --color-blue-accent: #0288D1;
+
+  --color-gold: #D4A017;
+  --color-dark: #1A1A2E;
+  --color-bg: #F5F7F2;
+  --color-white: #FFFFFF;
+  --color-text-primary: #1A1A2E;
+  --color-text-secondary: #6B7280;
+  --color-border: #E0E0E0;
+
+  --color-solar: #F59E0B;
+  --color-wind: #2196F3;
+  --color-biogas: #10B981;
+
+  /* Blockchain UI Tokens */
+  --color-chain-glow: #00E676;
+  --color-chain-pulse: #40C4FF;
+  --color-chain-gold: #FFD740;
+  --color-chain-red: #FF5252;
+  --color-dark-surface: #0D1117;
+  --color-dark-card: #161B22;
+  --color-dark-border: #30363D;
+  --color-dark-text: #E6EDF3;
+  --color-dark-muted: #8B949E;
+  --color-polygon-purple: #8247E5;
+  --color-nft-shimmer-1: #1E7C3A;
+  --color-nft-shimmer-2: #1565C0;
+
+  --font-heading: 'Montserrat', sans-serif;
+  --font-body: 'Open Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 64px;
+  --section-padding: 64px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  line-height: 1.7;
+  font-size: 15px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  color: var(--color-text-primary);
+}
+
+h1.hero-title {
+  font-weight: 800;
+  font-size: 52px;
+  line-height: 1.15;
+}
+
+h2.section-title {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 1.25;
+}
+
+h3.card-title {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+h4.card-subtitle {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.label {
+  font-weight: 500;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.stat-number {
+  font-weight: 800;
+  font-size: 48px;
+}
+
+.nav-link {
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes kenBurns {
+  0% {
+    transform: scale(1.0);
+  }
+
+  100% {
+    transform: scale(1.05);
+  }
+}
+
+.ken-burns-anim {
+  animation: kenBurns 8s infinite alternate ease-in-out;
+}
+
+.hover-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+/* Blockchain UI Animations & Effects */
+@keyframes pulseGlow {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes holo-rotate {
+  0% {
+    box-shadow: 0 0 8px var(--color-nft-shimmer-1), 0 0 16px var(--color-nft-shimmer-2);
+  }
+
+  50% {
+    box-shadow: 0 0 8px var(--color-nft-shimmer-2), 0 0 16px var(--color-nft-shimmer-1);
+  }
+
+  100% {
+    box-shadow: 0 0 8px var(--color-nft-shimmer-1), 0 0 16px var(--color-nft-shimmer-2);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.holo-card {
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  box-shadow: 0 0 0 1px rgba(30, 124, 58, 0.5), 0 0 0 2px rgba(21, 101, 192, 0.3);
+  animation: holo-rotate 4s linear infinite;
+  transition: transform 0.3s ease;
+}
+
+.holo-card:hover {
+  transform: perspective(1000px) rotateY(5deg) rotateX(2deg) scale(1.02);
+}
+
+.shimmer-bg {
+  background: linear-gradient(90deg, #161B22 25%, #1E2A3A 50%, #161B22 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.glow-active {
+  box-shadow: 0 0 0 3px rgba(0, 230, 118, 0.15), 0 0 12px rgba(0, 230, 118, 0.3);
+  animation: pulseGlow 2s infinite;
+}
+
+/* Dark Mode Overrides */
+.theme-dark {
+  background-color: var(--color-dark-surface);
+  color: var(--color-dark-text);
+}
+
+.theme-dark h1,
+.theme-dark h2,
+.theme-dark h3,
+.theme-dark h4,
+.theme-dark h5,
+.theme-dark h6 {
+  color: var(--color-dark-text);
+}
+
+.theme-dark .card {
+  background-color: var(--color-dark-card);
+  border: 1px solid var(--color-dark-border);
+}
+
+.theme-dark .card:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}

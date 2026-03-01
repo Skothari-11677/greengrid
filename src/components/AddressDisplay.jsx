@@ -32,7 +32,7 @@ export default function AddressDisplay({ address, showExternalLink = false }) {
             </button>
 
             {showExternalLink && (
-                <a href={`https://polygonscan.com/address/${address}`} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', color: 'var(--color-dark-muted)' }}>
+                <a href={`https://etherscan.io/address/${address}`} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', color: 'var(--color-dark-muted)' }}>
                     <ExternalLink size={14} style={{ cursor: 'pointer', transition: 'color 0.2s' }} onMouseOver={(e) => e.currentTarget.style.color = 'var(--color-chain-pulse)'} onMouseOut={(e) => e.currentTarget.style.color = 'var(--color-dark-muted)'} />
                 </a>
             )}

@@ -28,8 +28,8 @@ export default function OnChainVerificationPanel({ isDark = false }) {
                 }}
             >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--color-polygon-purple)', boxShadow: '0 0 8px var(--color-polygon-purple)' }}></div>
-                    <span style={{ fontSize: '13px', fontWeight: 600, color: isDark ? 'white' : 'var(--color-text-primary)' }}>Verified on Polygon Blockchain</span>
+                    <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--color-ethereum-blue)', boxShadow: '0 0 8px var(--color-ethereum-blue)' }}></div>
+                    <span style={{ fontSize: '13px', fontWeight: 600, color: isDark ? 'white' : 'var(--color-text-primary)' }}>Verified on Ethereum Blockchain</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--color-blue-mid)', fontSize: '13px', fontWeight: 600 }}>
                     View Proof {expanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
@@ -90,7 +90,7 @@ export default function OnChainVerificationPanel({ isDark = false }) {
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', borderLeft: `1px solid ${border}`, paddingLeft: '24px' }}>
 
                         <div style={{ display: 'flex', gap: '8px' }}>
-                            <span style={{ backgroundColor: 'var(--color-polygon-purple)', color: 'white', padding: '3px 10px', borderRadius: '4px', fontSize: '11px', fontWeight: 600, fontFamily: 'var(--font-heading)' }}>POLYGON MAINNET</span>
+                            <span style={{ backgroundColor: 'var(--color-ethereum-blue)', color: 'white', padding: '3px 10px', borderRadius: '4px', fontSize: '11px', fontWeight: 600, fontFamily: 'var(--font-heading)' }}>ETHEREUM</span>
                             <span style={{ backgroundColor: '#375BD2', color: 'white', padding: '3px 10px', borderRadius: '4px', fontSize: '11px', fontWeight: 600, fontFamily: 'var(--font-heading)' }}>CHAINLINK VERIFIED</span>
                         </div>
 

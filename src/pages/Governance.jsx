@@ -45,14 +45,14 @@ export default function Governance() {
 
                 <div style={{ marginBottom: 'var(--spacing-2xl)' }}>
                     <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '36px', fontWeight: 800, color: 'white', marginBottom: '8px' }}>GRID Governance</h1>
-                    <p style={{ color: 'var(--color-polygon-purple)', fontSize: '18px', fontWeight: 600 }}>Your tokens = Your vote. Shape the future of GreenGrid.</p>
+                    <p style={{ color: 'var(--color-ethereum-blue)', fontSize: '18px', fontWeight: 600 }}>Your tokens = Your vote. Shape the future of GreenGrid.</p>
                 </div>
 
                 {/* Token Balance Card */}
-                <div className="card" style={{ padding: '32px', borderRadius: '12px', borderLeft: '4px solid var(--color-polygon-purple)', marginBottom: 'var(--spacing-2xl)', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 'var(--spacing-xl)', alignItems: 'center' }}>
+                <div className="card" style={{ padding: '32px', borderRadius: '12px', borderLeft: '4px solid var(--color-ethereum-blue)', marginBottom: 'var(--spacing-2xl)', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 'var(--spacing-xl)', alignItems: 'center' }}>
                     <div style={{ gridColumn: 'span 1' }}>
                         <div style={{ fontSize: '13px', color: 'var(--color-dark-muted)', textTransform: 'uppercase', fontWeight: 600, marginBottom: '8px' }}>GRID Balance</div>
-                        <div style={{ fontFamily: 'var(--font-heading)', fontSize: '48px', fontWeight: 800, color: 'var(--color-polygon-purple)', lineHeight: 1 }}>3,200</div>
+                        <div style={{ fontFamily: 'var(--font-heading)', fontSize: '48px', fontWeight: 800, color: 'var(--color-ethereum-blue)', lineHeight: 1 }}>3,200</div>
                     </div>
 
                     <div style={{ gridColumn: 'span 1', borderLeft: '1px solid var(--color-dark-border)', paddingLeft: 'var(--spacing-xl)' }}>

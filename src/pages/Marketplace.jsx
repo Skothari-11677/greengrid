@@ -4,7 +4,7 @@ import SectionHeading from '../components/SectionHeading.jsx';
 import Card from '../components/Card';
 import Badge from '../components/Badge';
 import Button from '../components/Button';
-import { useBlockchain } from '../hooks/useBlockchain';
+import { useBlockchain } from '../hooks/useBlockchain.js';
 
 const DUMMY_LISTINGS = [
     { id: 1, type: 'solar', name: 'Surya Tech Park', location: 'Bengaluru', price: 4.20, units: 150, rating: 4.8 },
@@ -240,8 +240,8 @@ export default function Marketplace() {
                                     padding: '6px 12px', marginBottom: '12px',
                                     display: 'flex', justifyContent: 'space-between', alignItems: 'center'
                                 }}>
-                                    <span style={{ color: '#8247E5', fontSize: '11px', fontWeight: 700 }}>
-                                        ⛓ POLYGON · ON-CHAIN
+                                    <span style={{ color: '#627EEA', fontSize: '11px', fontWeight: 700 }}>
+                                        ⛓ ETHEREUM · ON-CHAIN
                                     </span>
                                     <span style={{
                                         color: item.active ? '#00E676' : '#8B949E',

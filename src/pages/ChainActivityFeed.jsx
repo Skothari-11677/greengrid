@@ -6,7 +6,7 @@ const SEED_TRADES = [
     { id: 1, type: 'Trade', producer: '0x1A2b...3c4D', consumer: '0x9xF2...1a3E', kwh: 120, val: 540, hash: '0xabc1...def2', isNew: false, color: 'var(--color-chain-glow)' },
     { id: 2, type: 'Mint', producer: 'GreenGrid Registry', consumer: '0x3a4F...8c2D', kwh: '-', val: 247, hash: '0x77f2...99a0', isNew: false, color: 'var(--color-chain-pulse)' },
     { id: 3, type: 'Investment', producer: 'Navi Mumbai Grid', consumer: '0x5b3C...4f9A', kwh: '-', val: 12500, hash: '0xcc84...ee21', isNew: false, color: 'var(--color-chain-gold)' },
-    { id: 4, type: 'Vote', producer: 'GIP-042', consumer: '0x88c2...11b4', kwh: '-', val: '-', hash: '0x00f1...44a7', isNew: false, color: 'var(--color-polygon-purple)' },
+    { id: 4, type: 'Vote', producer: 'GIP-042', consumer: '0x88c2...11b4', kwh: '-', val: '-', hash: '0x00f1...44a7', isNew: false, color: 'var(--color-ethereum-blue)' },
 ];
 
 export default function ChainActivityFeed() {
@@ -57,7 +57,7 @@ export default function ChainActivityFeed() {
             <div style={{ borderBottom: '1px solid var(--color-dark-border)', padding: 'var(--spacing-2xl) var(--spacing-lg)' }}>
                 <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                     <div>
-                        <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '36px', fontWeight: 800, color: 'white', marginBottom: '8px' }}>Live Energy Trades on Polygon</h1>
+                        <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '36px', fontWeight: 800, color: 'white', marginBottom: '8px' }}>Live Energy Trades on Ethereum</h1>
                         <p style={{ color: 'var(--color-dark-muted)', fontSize: '16px' }}>
                             Every transaction is public, permanent, and verified.
                         </p>
@@ -162,13 +162,13 @@ export default function ChainActivityFeed() {
                         <div className="glow-active" style={{ animationDelay: '1.2s', position: 'absolute', top: '220px', left: '180px', width: '16px', height: '16px', backgroundColor: 'var(--color-chain-glow)', borderRadius: '50%' }}></div>
                     </div>
 
-                    <div className="card" style={{ padding: '32px 24px', borderRadius: '12px', backgroundColor: '#161B22', border: '1px solid var(--color-polygon-purple)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                    <div className="card" style={{ padding: '32px 24px', borderRadius: '12px', backgroundColor: '#161B22', border: '1px solid var(--color-ethereum-blue)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                         <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '20px', color: 'white', marginBottom: '16px' }}>Want to verify independently?</h3>
                         <p style={{ color: 'var(--color-dark-muted)', fontSize: '14px', marginBottom: '24px' }}>
-                            We believe in trustless systems. You don't have to take our word for any of these trades. Verify the raw state on the Polygon blockchain.
+                            We believe in trustless systems. You don't have to take our word for any of these trades. Verify the raw state on the Ethereum blockchain.
                         </p>
-                        <a href="#" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px', backgroundColor: 'var(--color-polygon-purple)', color: 'white', padding: '12px 24px', borderRadius: '6px', fontWeight: 600, textDecoration: 'none' }}>
-                            View Contract on Polygonscan <ExternalLink size={16} />
+                        <a href="#" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px', backgroundColor: 'var(--color-ethereum-blue)', color: 'white', padding: '12px 24px', borderRadius: '6px', fontWeight: 600, textDecoration: 'none' }}>
+                            View Contract on Etherscan <ExternalLink size={16} />
                         </a>
                     </div>
                 </div>

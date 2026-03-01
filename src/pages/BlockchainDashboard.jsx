@@ -88,9 +88,9 @@ export default function BlockchainDashboard() {
                     <div className="card" style={{ padding: '24px', borderRadius: '12px', transition: 'all 0.2s' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '16px' }}>
                             <div style={{ fontSize: '13px', color: 'var(--color-dark-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Governance</div>
-                            <Vote size={20} color="var(--color-polygon-purple)" />
+                            <Vote size={20} color="var(--color-ethereum-blue)" />
                         </div>
-                        <div style={{ fontFamily: 'var(--font-heading)', fontSize: '32px', fontWeight: 800, color: 'var(--color-polygon-purple)' }}>
+                        <div style={{ fontFamily: 'var(--font-heading)', fontSize: '32px', fontWeight: 800, color: 'var(--color-ethereum-blue)' }}>
                             3.2k <span style={{ fontSize: '16px' }}>GRID</span>
                         </div>
                     </div>
@@ -182,7 +182,7 @@ export default function BlockchainDashboard() {
                             <tr style={{ borderBottom: '1px solid var(--color-dark-border)' }}>
                                 <td style={{ padding: '16px 24px' }}>
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                        <Vote size={16} color="var(--color-polygon-purple)" />
+                                        <Vote size={16} color="var(--color-ethereum-blue)" />
                                         <span style={{ color: 'white', fontWeight: 500 }}>DAO Vote Cast</span>
                                     </div>
                                 </td>

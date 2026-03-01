@@ -1,15 +1,27 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Leaf } from 'lucide-react';
 import { useBlockchainContext } from '../context/BlockchainContext';
 
+const NAV_LINKS = [
+    { to: '/marketplace', label: 'Marketplace' },
+    { to: '/invest', label: 'Invest' },
+    { to: '/community', label: 'Community' },
+    { to: '/dashboard', label: 'Dashboard' },
+    { to: '/government', label: '🏛️ Govt Hub', accent: '#FFD740' },
+    { to: '/chain-activity', label: '⛓ Live Chain', accent: 'var(--color-blue-primary)' },
+];
+
 export default function Navbar() {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const location = useLocation();
 
     const {
         wallet, balance,
         connectWallet
     } = useBlockchainContext();
+
+    const isActive = (path) => location.pathname === path || location.pathname.startsWith(path + '/');
 
     return (
         <header style={{
@@ -42,12 +54,26 @@ export default function Navbar() {
 
                 {/* Nav Links */}
                 <nav style={{ display: 'flex', gap: 'var(--spacing-lg)', alignItems: 'center' }}>
-                    <Link to="/marketplace" className="nav-link" style={{ color: 'var(--color-text-primary)' }}>Marketplace</Link>
-                    <Link to="/invest" className="nav-link" style={{ color: 'var(--color-text-primary)' }}>Invest</Link>
-                    <Link to="/community" className="nav-link" style={{ color: 'var(--color-text-primary)' }}>Community</Link>
-                    <Link to="/dashboard" className="nav-link" style={{ color: 'var(--color-text-primary)' }}>Dashboard</Link>
-                    <Link to="/government" className="nav-link" style={{ color: '#FFD740', fontWeight: 700 }}>🏛️ Govt Hub</Link>
-                    <Link to="/chain-activity" className="nav-link" style={{ color: 'var(--color-blue-primary)' }}>⛓ Live Chain</Link>
+                    {NAV_LINKS.map(link => {
+                        const active = isActive(link.to);
+                        const baseColor = link.accent || 'var(--color-text-primary)';
+                        return (
+                            <Link
+                                key={link.to}
+                                to={link.to}
+                                className="nav-link"
+                                style={{
+                                    color: active ? (link.accent || 'var(--color-primary)') : baseColor,
+                                    fontWeight: active ? 700 : (link.accent ? 700 : 400),
+                                    borderBottom: active ? `2px solid ${link.accent || 'var(--color-primary)'}` : '2px solid transparent',
+                                    paddingBottom: '4px',
+                                    transition: 'all 0.2s'
+                                }}
+                            >
+                                {link.label}
+                            </Link>
+                        );
+                    })}
                 </nav>
 
                 {/* Wallet Actions */}

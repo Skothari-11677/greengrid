@@ -5,6 +5,7 @@ import Card from '../components/Card';
 import Badge from '../components/Badge';
 import Button from '../components/Button';
 import { useBlockchain } from '../hooks/useBlockchain.js';
+import { ETH_INR_RATE, inrToEth, ethToInr, formatDualPrice, formatEthWithInr } from '../utils/priceConverter';
 
 const DUMMY_LISTINGS = [
     { id: 1, type: 'solar', name: 'Surya Tech Park', location: 'Bengaluru', price: 4.20, units: 150, rating: 4.8 },
@@ -51,7 +52,8 @@ export default function Marketplace() {
         type: l.type.toLowerCase(),
         name: `${l.type} Producer`,
         location: l.location,
-        price: parseFloat(l.price) * 100000, // convert ETH to ₹ for display
+        priceInr: ethToInr(l.price),
+        priceEth: parseFloat(l.price),
         units: l.units,
         rating: 5.0,
         onChain: true,
@@ -168,6 +170,7 @@ export default function Marketplace() {
                                 <label style={{ color: '#8B949E', fontSize: '12px', display: 'block', marginBottom: '6px' }}>PRICE PER UNIT (ETH)</label>
                                 <input value={price} onChange={e => setPrice(e.target.value)} type="number"
                                     style={{ width: '100%', padding: '10px', backgroundColor: '#161B22', border: '1px solid #30363D', borderRadius: '6px', color: 'white', fontSize: '14px', boxSizing: 'border-box' }} />
+                                {price && <div style={{ color: '#40C4FF', fontSize: '12px', marginTop: '4px' }}>≈ ₹{ethToInr(price).toLocaleString('en-IN', { maximumFractionDigits: 2 })} INR / kWh</div>}
                             </div>
                             <div>
                                 <label style={{ color: '#8B949E', fontSize: '12px', display: 'block', marginBottom: '6px' }}>UNITS AVAILABLE (kWh)</label>
@@ -279,11 +282,19 @@ export default function Marketplace() {
                                 </div>
                             </div>
 
-                            <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: 'var(--spacing-md)' }}>
-                                <span style={{ fontSize: '28px', fontWeight: 800, fontFamily: 'var(--font-heading)', color: 'var(--color-text-primary)' }}>
-                                    {item.onChain ? `${item.chainPrice} ETH` : `₹${item.price.toFixed(2)}`}
-                                </span>
-                                <span style={{ color: 'var(--color-text-secondary)', fontSize: '14px' }}>/ kWh</span>
+                            <div style={{ marginBottom: 'var(--spacing-md)' }}>
+                                <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
+                                    <span style={{ fontSize: '28px', fontWeight: 800, fontFamily: 'var(--font-heading)', color: 'var(--color-text-primary)' }}>
+                                        {item.onChain ? `₹${item.priceInr.toFixed(2)}` : `₹${item.price.toFixed(2)}`}
+                                    </span>
+                                    <span style={{ color: 'var(--color-text-secondary)', fontSize: '14px' }}>/ kWh</span>
+                                </div>
+                                <div style={{ fontSize: '12px', color: 'var(--color-blue-primary)', fontFamily: 'var(--font-mono, monospace)', marginTop: '2px' }}>
+                                    ≈ {item.onChain
+                                        ? `${item.priceEth.toFixed(6)} ETH`
+                                        : `${inrToEth(item.price).toFixed(6)} ETH`
+                                    } / kWh
+                                </div>
                             </div>
 
                             <p style={{ fontSize: '14px', color: 'var(--color-text-secondary)', marginBottom: 'var(--spacing-lg)', fontWeight: 500 }}>
@@ -342,7 +353,7 @@ export default function Marketplace() {
                                     </span>
                                 </div>
                                 <div style={{ textAlign: 'right' }}>
-                                    <div style={{ color: '#FFD740', fontWeight: 700 }}>{t.paid} ETH</div>
+                                    <div style={{ color: '#FFD740', fontWeight: 700 }}>{t.paid} ETH <span style={{ color: '#8B949E', fontWeight: 400, fontSize: '12px' }}>≈ ₹{ethToInr(t.paid).toLocaleString('en-IN', { maximumFractionDigits: 0 })}</span></div>
                                     <div style={{ fontFamily: 'monospace', fontSize: '12px', color: '#40C4FF' }}>
                                         {t.hash.slice(0, 14)}...
                                     </div>

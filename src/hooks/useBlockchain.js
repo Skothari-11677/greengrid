@@ -54,7 +54,8 @@ export function useBlockchain() {
                 chainId: 1337,
                 name: "localhost"
             });
-            await provider.send("eth_requestAccounts", []);
+            // Force MetaMask to show the account picker (not auto-connect)
+            await provider.send("wallet_requestPermissions", [{ eth_accounts: {} }]);
             const signer = await provider.getSigner();
             const address = await signer.getAddress();
             const bal = await provider.getBalance(address);

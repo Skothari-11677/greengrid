@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Leaf } from 'lucide-react';
-import { useBlockchain } from '../hooks/useBlockchain';
+import { useBlockchainContext } from '../context/BlockchainContext';
 
 export default function Navbar() {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -9,7 +9,7 @@ export default function Navbar() {
     const {
         wallet, balance,
         connectWallet
-    } = useBlockchain();
+    } = useBlockchainContext();
 
     return (
         <header style={{
@@ -140,6 +140,23 @@ export default function Navbar() {
                                             {item.label}
                                         </Link>
                                     ))}
+
+                                    {/* Log Out */}
+                                    <div style={{ borderTop: '1px solid #30363D', marginTop: '4px', paddingTop: '4px' }}>
+                                        <button
+                                            onClick={() => { window.location.reload(); }}
+                                            style={{
+                                                width: '100%', textAlign: 'left', padding: '10px 16px',
+                                                fontSize: '14px', color: '#FF5252', border: 'none',
+                                                background: 'transparent', cursor: 'pointer',
+                                                transition: 'background-color 0.2s', fontWeight: 600
+                                            }}
+                                            onMouseOver={e => e.currentTarget.style.backgroundColor = '#161B22'}
+                                            onMouseOut={e => e.currentTarget.style.backgroundColor = 'transparent'}
+                                        >
+                                            🚪 Log Out
+                                        </button>
+                                    </div>
                                 </div>
                             )}
                         </div>

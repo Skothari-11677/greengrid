@@ -4,7 +4,7 @@ import SectionHeading from '../components/SectionHeading.jsx';
 import Card from '../components/Card';
 import Badge from '../components/Badge';
 import Button from '../components/Button';
-import { useBlockchain } from '../hooks/useBlockchain.js';
+import { useBlockchainContext } from '../context/BlockchainContext';
 import { ETH_INR_RATE, inrToEth, ethToInr, formatDualPrice, formatEthWithInr } from '../utils/priceConverter';
 
 const DUMMY_LISTINGS = [
@@ -19,6 +19,7 @@ const DUMMY_LISTINGS = [
 export default function Marketplace() {
     const [activeFilter, setActiveFilter] = useState('All');
     const [showListForm, setShowListForm] = useState(false);
+    const [buyQty, setBuyQty] = useState({});  // { [listingId]: quantity }
 
     // List energy form state
     const [energyType, setEnergyType] = useState('Solar');
@@ -31,7 +32,7 @@ export default function Marketplace() {
         status, loading,
         connectWallet, listEnergy,
         buyEnergy, loadListings
-    } = useBlockchain();
+    } = useBlockchainContext();
 
     const filters = ['All', 'Solar', 'Wind', 'Biogas', 'Available Now'];
 
@@ -301,30 +302,69 @@ export default function Marketplace() {
                                 {item.units.toLocaleString()} Units Available
                             </p>
 
-                            <div style={{ display: 'flex', gap: '12px' }}>
+                            <div style={{ display: 'flex', gap: '8px', flexDirection: 'column' }}>
                                 {item.onChain && item.active && wallet ? (
-                                    <Button
-                                        variant="primary"
-                                        style={{ flex: 1 }}
-                                        onClick={() => buyEnergy(item.chainId, item.chainPrice, 10)}
-                                        disabled={loading}>
-                                        {loading ? '⏳ Processing...' : '⚡ Buy 10 kWh'}
-                                    </Button>
+                                    <>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                            <button
+                                                onClick={() => setBuyQty(prev => ({ ...prev, [item.id]: Math.max(1, (prev[item.id] || 10) - 5) }))}
+                                                style={{ width: '36px', height: '36px', borderRadius: '6px', border: '1px solid var(--color-border)', backgroundColor: 'var(--color-bg)', fontSize: '18px', fontWeight: 700, cursor: 'pointer', color: 'var(--color-text-primary)' }}
+                                            >−</button>
+                                            <input
+                                                type="number"
+                                                min="1"
+                                                max={item.units}
+                                                value={buyQty[item.id] || 10}
+                                                onChange={e => setBuyQty(prev => ({ ...prev, [item.id]: Math.max(1, Math.min(item.units, parseInt(e.target.value) || 1)) }))}
+                                                style={{ width: '64px', height: '36px', textAlign: 'center', borderRadius: '6px', border: '1px solid var(--color-border)', fontSize: '14px', fontWeight: 700, fontFamily: 'var(--font-heading)' }}
+                                            />
+                                            <button
+                                                onClick={() => setBuyQty(prev => ({ ...prev, [item.id]: Math.min(item.units, (prev[item.id] || 10) + 5) }))}
+                                                style={{ width: '36px', height: '36px', borderRadius: '6px', border: '1px solid var(--color-border)', backgroundColor: 'var(--color-bg)', fontSize: '18px', fontWeight: 700, cursor: 'pointer', color: 'var(--color-text-primary)' }}
+                                            >+</button>
+                                            <span style={{ fontSize: '13px', color: 'var(--color-text-secondary)' }}>kWh</span>
+                                        </div>
+                                        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                                            <Button
+                                                variant="primary"
+                                                style={{ flex: 1 }}
+                                                onClick={() => buyEnergy(item.chainId, item.chainPrice, buyQty[item.id] || 10)}
+                                                disabled={loading}>
+                                                {loading ? '⏳ Processing...' : `⚡ Buy ${buyQty[item.id] || 10} kWh`}
+                                            </Button>
+                                            <button style={{
+                                                width: '44px', height: '40px', borderRadius: '6px',
+                                                border: '2px solid var(--color-blue-light)',
+                                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                backgroundColor: 'white', cursor: 'pointer', transition: 'background-color 0.2s'
+                                            }}
+                                                onMouseOver={e => e.currentTarget.style.backgroundColor = 'var(--color-blue-light)'}
+                                                onMouseOut={e => e.currentTarget.style.backgroundColor = 'white'}>
+                                                <Heart size={20} color="var(--color-blue-primary)" />
+                                            </button>
+                                        </div>
+                                        <div style={{ fontSize: '12px', color: 'var(--color-text-secondary)' }}>
+                                            Total: ≈ {((buyQty[item.id] || 10) * (item.priceEth || inrToEth(item.price))).toFixed(6)} ETH
+                                            <span style={{ marginLeft: '8px' }}>(₹{((buyQty[item.id] || 10) * (item.priceInr || item.price)).toFixed(2)})</span>
+                                        </div>
+                                    </>
                                 ) : (
-                                    <Button variant="primary" style={{ flex: 1 }}>
-                                        Buy / Negotiate
-                                    </Button>
+                                    <div style={{ display: 'flex', gap: '12px' }}>
+                                        <Button variant="primary" style={{ flex: 1 }}>
+                                            Buy / Negotiate
+                                        </Button>
+                                        <button style={{
+                                            width: '44px', borderRadius: '6px',
+                                            border: '2px solid var(--color-blue-light)',
+                                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                            backgroundColor: 'white', cursor: 'pointer', transition: 'background-color 0.2s'
+                                        }}
+                                            onMouseOver={e => e.currentTarget.style.backgroundColor = 'var(--color-blue-light)'}
+                                            onMouseOut={e => e.currentTarget.style.backgroundColor = 'white'}>
+                                            <Heart size={20} color="var(--color-blue-primary)" />
+                                        </button>
+                                    </div>
                                 )}
-                                <button style={{
-                                    width: '44px', borderRadius: '6px',
-                                    border: '2px solid var(--color-blue-light)',
-                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                    backgroundColor: 'white', cursor: 'pointer', transition: 'background-color 0.2s'
-                                }}
-                                    onMouseOver={e => e.currentTarget.style.backgroundColor = 'var(--color-blue-light)'}
-                                    onMouseOut={e => e.currentTarget.style.backgroundColor = 'white'}>
-                                    <Heart size={20} color="var(--color-blue-primary)" />
-                                </button>
                             </div>
                         </Card>
                     ))}

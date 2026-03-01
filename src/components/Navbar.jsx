@@ -57,16 +57,16 @@ export default function Navbar() {
                     {NAV_LINKS.map(link => {
                         const active = isActive(link.to);
                         const baseColor = link.accent || 'var(--color-text-primary)';
+                        const activeColor = link.accent || 'var(--color-primary)';
                         return (
                             <Link
                                 key={link.to}
                                 to={link.to}
                                 className="nav-link"
                                 style={{
-                                    color: active ? (link.accent || 'var(--color-primary)') : baseColor,
+                                    color: active ? activeColor : baseColor,
                                     fontWeight: active ? 700 : (link.accent ? 700 : 400),
-                                    borderBottom: active ? `2px solid ${link.accent || 'var(--color-primary)'}` : '2px solid transparent',
-                                    paddingBottom: '4px',
+                                    boxShadow: active ? `0 2px 0 0 ${activeColor}` : 'none',
                                     transition: 'all 0.2s'
                                 }}
                             >

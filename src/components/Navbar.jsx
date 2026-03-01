@@ -46,6 +46,7 @@ export default function Navbar() {
                     <Link to="/invest" className="nav-link" style={{ color: 'var(--color-text-primary)' }}>Invest</Link>
                     <Link to="/community" className="nav-link" style={{ color: 'var(--color-text-primary)' }}>Community</Link>
                     <Link to="/dashboard" className="nav-link" style={{ color: 'var(--color-text-primary)' }}>Dashboard</Link>
+                    <Link to="/government" className="nav-link" style={{ color: '#FFD740', fontWeight: 700 }}>🏛️ Govt Hub</Link>
                     <Link to="/chain-activity" className="nav-link" style={{ color: 'var(--color-blue-primary)' }}>⛓ Live Chain</Link>
                 </nav>
 

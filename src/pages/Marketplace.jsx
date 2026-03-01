@@ -5,6 +5,7 @@ import Card from '../components/Card';
 import Badge from '../components/Badge';
 import Button from '../components/Button';
 import { useBlockchainContext } from '../context/BlockchainContext';
+import { K_UNIT_THRESHOLD, DISCOUNT_PERCENT } from '../hooks/useBlockchain';
 import { ETH_INR_RATE, inrToEth, ethToInr, formatDualPrice, formatEthWithInr } from '../utils/priceConverter';
 
 const DUMMY_LISTINGS = [
@@ -343,9 +344,28 @@ export default function Marketplace() {
                                                 <Heart size={20} color="var(--color-blue-primary)" />
                                             </button>
                                         </div>
+                                        {(buyQty[item.id] || 10) >= K_UNIT_THRESHOLD && (
+                                            <div style={{
+                                                backgroundColor: '#00E67622', color: '#00E676',
+                                                padding: '6px 12px', borderRadius: '6px', fontSize: '12px',
+                                                fontWeight: 700, textAlign: 'center', fontFamily: 'var(--font-heading)'
+                                            }}>
+                                                🎉 {DISCOUNT_PERCENT}% BULK DISCOUNT APPLIED — You save ≈ {((buyQty[item.id] || 10) * (item.priceEth || inrToEth(item.price)) * 0.1).toFixed(6)} ETH
+                                            </div>
+                                        )}
                                         <div style={{ fontSize: '12px', color: 'var(--color-text-secondary)' }}>
-                                            Total: ≈ {((buyQty[item.id] || 10) * (item.priceEth || inrToEth(item.price))).toFixed(6)} ETH
-                                            <span style={{ marginLeft: '8px' }}>(₹{((buyQty[item.id] || 10) * (item.priceInr || item.price)).toFixed(2)})</span>
+                                            Total: ≈ {(() => {
+                                                const qty = buyQty[item.id] || 10;
+                                                const ethPrice = item.priceEth || inrToEth(item.price);
+                                                const total = qty * ethPrice * (qty >= K_UNIT_THRESHOLD ? 0.9 : 1);
+                                                const inrTotal = qty * (item.priceInr || item.price) * (qty >= K_UNIT_THRESHOLD ? 0.9 : 1);
+                                                return `${total.toFixed(6)} ETH`;
+                                            })()}
+                                            <span style={{ marginLeft: '8px' }}>(₹{(() => {
+                                                const qty = buyQty[item.id] || 10;
+                                                const inrTotal = qty * (item.priceInr || item.price) * (qty >= K_UNIT_THRESHOLD ? 0.9 : 1);
+                                                return inrTotal.toFixed(2);
+                                            })()})</span>
                                         </div>
                                     </>
                                 ) : (

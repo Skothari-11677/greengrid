@@ -6,12 +6,19 @@ const CONTRACT_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 const ABI = [
     "function listEnergy(string,string,uint256,uint256) returns (uint256)",
     "function buyEnergy(uint256,uint256) payable",
+    "function calculateCost(uint256,uint256) view returns (uint256)",
     "function getListing(uint256) view returns (tuple(uint256,address,string,string,uint256,uint256,bool))",
     "function listingCount() view returns (uint256)",
     "function tradeCount() view returns (uint256)",
+    "function K_UNIT_THRESHOLD() view returns (uint256)",
+    "function DISCOUNT_BPS() view returns (uint256)",
     "event EnergyListed(uint256 indexed,address indexed,string,string,uint256,uint256)",
     "event EnergyPurchased(uint256 indexed,uint256 indexed,address indexed,address,uint256,uint256,uint256)"
 ];
+
+// K-unit discount constants (must match smart contract)
+export const K_UNIT_THRESHOLD = 100;  // kWh
+export const DISCOUNT_PERCENT = 10;   // 10% off for bulk orders
 
 export function useBlockchain() {
     const [wallet, setWallet] = useState(null);
@@ -114,15 +121,23 @@ export function useBlockchain() {
         setLoading(false);
     }
 
-    // ── Consumer: Buy Energy ──────────────────────────────────
+    // ── Consumer: Buy Energy (with K-unit discount) ───────────
     async function buyEnergy(listingId, pricePerUnit, unitsToBuy) {
         if (!contract) { alert("Connect wallet first!"); return; }
         setLoading(true);
-        setStatus("⏳ Sending payment to smart contract...");
+
+        const isDiscounted = unitsToBuy >= K_UNIT_THRESHOLD;
+        setStatus(isDiscounted
+            ? `⏳ Bulk discount applied! 10% off for ${unitsToBuy} kWh...`
+            : "⏳ Sending payment to smart contract...");
+
         try {
-            const totalCost = ethers.parseEther(
-                (parseFloat(pricePerUnit) * unitsToBuy).toFixed(8)
-            );
+            let totalPrice = parseFloat(pricePerUnit) * unitsToBuy;
+            if (isDiscounted) {
+                totalPrice = totalPrice * 0.9; // 10% discount
+            }
+            const totalCost = ethers.parseEther(totalPrice.toFixed(8));
+
             const tx = await contract.buyEnergy(listingId, unitsToBuy, {
                 value: totalCost
             });
@@ -131,12 +146,15 @@ export function useBlockchain() {
                 hash: tx.hash,
                 listing: listingId,
                 units: unitsToBuy,
-                paid: (parseFloat(pricePerUnit) * unitsToBuy).toFixed(4),
+                paid: totalPrice.toFixed(4),
+                discount: isDiscounted,
                 time: new Date().toLocaleTimeString(),
                 status: "Pending ⏳"
             }, ...prev]);
             await tx.wait();
-            setStatus("✅ Purchase complete! Producer paid instantly.");
+            setStatus(isDiscounted
+                ? `✅ Bulk purchase complete! You saved ${(parseFloat(pricePerUnit) * unitsToBuy * 0.1).toFixed(6)} ETH`
+                : "✅ Purchase complete! Producer paid instantly.");
             setTrades(prev => prev.map(t =>
                 t.hash === tx.hash ? { ...t, status: "Confirmed ✅" } : t
             ));

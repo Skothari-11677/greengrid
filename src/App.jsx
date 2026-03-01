@@ -11,6 +11,7 @@ import NFTGallery from './pages/NFTGallery';
 import InvestmentTokens from './pages/InvestmentTokens';
 import Governance from './pages/Governance';
 import ChainActivityFeed from './pages/ChainActivityFeed';
+import GovernmentHub from './pages/GovernmentHub';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/investments/tokens" element={<InvestmentTokens />} />
           <Route path="/governance" element={<Governance />} />
           <Route path="/chain-activity" element={<ChainActivityFeed />} />
+          <Route path="/government" element={<GovernmentHub />} />
         </Routes>
       </main>
       <Footer />
